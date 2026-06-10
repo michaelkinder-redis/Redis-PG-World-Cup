@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚽ PG World Cup Q2 2026 — Redis</title>
+<style>
+  :root {
+    --redis-red: #DC382C;
+    --redis-red-dark: #a82a21;
+    --redis-red-glow: rgba(220, 56, 44, 0.3);
+    --bg: #0e0e10;
+    --card: #18181c;
+    --card-border: #2a2a30;
+    --text: #f0f0f5;
+    --muted: #888899;
+    --gold: #FFD700;
+    --silver: #C0C0C0;
+    --bronze: #CD7F32;
+    --amer: #4DA6FF;
+    --emea: #50D890;
+    --apac: #FF9F43;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0e0e10 0%, #1a0a09 50%, #0e0e10 100%);
+    border-bottom: 2px solid var(--redis-red);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, var(--redis-red-glow) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .redis-logo {
+    background: var(--redis-red);
+    color: white;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  .header-title h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .header-title .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .week-badge {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    text-align: center;
+  }
+  .week-badge .week-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .week-badge .week-value { font-size: 20px; font-weight: 800; color: var(--redis-red); }
+  .week-badge .week-phase { font-size: 10px; color: var(--muted); }
+
+  .dates-badge {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--card-border);
+    background: var(--card);
+    padding: 0 32px;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 16px 28px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--redis-red);
+    border-bottom-color: var(--redis-red);
+  }
+
+  /* MAIN LAYOUT */
+  .content {
+    display: none;
+    padding: 24px 32px;
+    gap: 24px;
+    grid-template-columns: 1fr 320px;
+  }
+  .content.active { display: grid; }
+
+  /* SCORING INFO BAR */
+  .scoring-bar {
+    grid-column: 1 / -1;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .scoring-bar .formula {
+    font-family: 'Courier New', monospace;
+    color: var(--text);
+    font-size: 12px;
+    background: rgba(220,56,44,0.1);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border-left: 2px solid var(--redis-red);
+  }
+  .scoring-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.05);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+  .scoring-pill .val { color: var(--gold); font-weight: 700; }
+
+  /* TEAM LEADERBOARD */
+  .leaderboard-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-title { font-size: 15px; font-weight: 700; }
+  .card-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .leaderboard-table { width: 100%; border-collapse: collapse; }
+  .leaderboard-table th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.02);
+  }
+  .leaderboard-table th.right, .leaderboard-table td.right { text-align: right; }
+  .leaderboard-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+    vertical-align: middle;
+  }
+  .leaderboard-table tr:last-child td { border-bottom: none; }
+  .leaderboard-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .leaderboard-table tr.top-row td { background: rgba(220,56,44,0.06); }
+
+  .rank-cell { display: flex; align-items: center; gap: 8px; width: 50px; }
+  .rank-num { font-weight: 800; font-size: 16px; }
+  .rank-1 { color: var(--gold); }
+  .rank-2 { color: var(--silver); }
+  .rank-3 { color: var(--bronze); }
+  .rank-other { color: var(--muted); }
+
+  .team-name { font-weight: 700; font-size: 15px; }
+  .team-manager { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .region-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+  .region-AMER { background: rgba(77,166,255,0.15); color: var(--amer); }
+  .region-EMEA { background: rgba(80,216,144,0.15); color: var(--emea); }
+  .region-APAC { background: rgba(255,159,67,0.15); color: var(--apac); }
+
+  .metric-cell { text-align: center; }
+  .metric-val { font-size: 15px; font-weight: 700; }
+  .metric-label { font-size: 10px; color: var(--muted); }
+
+  .score-cell {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--redis-red);
+    text-align: right;
+  }
+  .score-cell.top { color: var(--gold); }
+
+  /* PHASE DIVIDER */
+  .phase-divider td {
+    background: rgba(220,56,44,0.08) !important;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--redis-red);
+    padding: 8px 16px !important;
+    border-top: 1px solid rgba(220,56,44,0.2) !important;
+  }
+
+  /* INDIVIDUAL LEADERBOARD */
+  .individual-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    align-self: start;
+  }
+
+  .individual-list { padding: 8px 0; }
+  .individual-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+  }
+  .individual-item:hover { background: rgba(255,255,255,0.03); }
+  .individual-item:last-child { border-bottom: none; }
+  .individual-item.top-3 { background: rgba(220,56,44,0.05); }
+
+  .ind-rank { font-size: 13px; font-weight: 800; min-width: 28px; }
+  .ind-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .ind-info { flex: 1; min-width: 0; }
+  .ind-name { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ind-team { font-size: 11px; color: var(--muted); }
+  .ind-score { font-size: 16px; font-weight: 900; color: var(--redis-red); }
+
+  /* EDIT BUTTON */
+  .edit-btn {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--redis-red);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(220,56,44,0.4);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .edit-btn:hover { background: var(--redis-red-dark); transform: translateY(-2px); box-shadow: 0 6px 28px rgba(220,56,44,0.5); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 200;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 32px;
+    overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #1a1a20;
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 780px;
+    padding: 28px;
+    margin: auto;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .modal-title { font-size: 18px; font-weight: 800; }
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+  }
+  .modal-close:hover { color: var(--text); }
+
+  .modal-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .modal-tab {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--card-border);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .modal-tab.active { background: var(--redis-red); color: white; border-color: var(--redis-red); }
+
+  .modal-section { display: none; }
+  .modal-section.active { display: block; }
+
+  .modal-grid {
+    display: grid;
+    gap: 16px;
+  }
+  .team-edit-row {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .team-edit-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .team-edit-fields {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .field-group label {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+  .field-group input {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+    padding: 7px 10px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field-group input:focus { border-color: var(--redis-red); }
+
+  .ind-edit-row {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    gap: 8px;
+    align-items: end;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .ind-edit-row .field-group input { text-align: left; font-size: 13px; }
+  .ind-edit-row .field-group input[type="number"] { text-align: center; }
+
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    justify-content: flex-end;
+  }
+  .btn-save {
+    background: var(--redis-red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-save:hover { background: var(--redis-red-dark); }
+  .btn-cancel {
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-cancel:hover { background: rgba(255,255,255,0.12); }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  /* LEGEND */
+  .legend {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .finals-badge {
+    background: linear-gradient(135deg, var(--gold), #FFA500);
+    color: #000;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* SCROLL */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="redis-logo">REDIS</div>
+    <div class="header-title">
+      <h1>⚽ PG World Cup &nbsp;<span style="color:var(--redis-red)">Q2 2026</span></h1>
+      <div class="subtitle">Pipeline Generation · Global Sales Competition · Jun 11 – Jul 19</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="week-badge">
+      <div class="week-label">Current Week</div>
+      <div class="week-value" id="current-week">—</div>
+      <div class="week-phase" id="current-phase">—</div>
+    </div>
+    <div class="dates-badge">
+      <div>🌍 Weeks 1–3: Global Heats</div>
+      <div>🏆 Weeks 4–5: Finals</div>
+      <div id="last-updated" style="margin-top:4px;color:var(--redis-red);font-weight:700"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('ae')">🎯 AE Track — Pipeline Progression</button>
+  <button class="tab-btn" onclick="switchTab('sdr')">📞 SDR Track — Pipeline Creation</button>
+</div>
+
+<!-- AE CONTENT -->
+<div class="content active" id="tab-ae">
+  <div class="scoring-bar">
+    <span>📊 Scoring:</span>
+    <span class="formula">Score = [(Discoveries × 1) + (NBMs × 3)] ÷ Team Size + Bonus</span>
+    <span class="scoring-pill">🔍 Discovery = <span class="val">1pt</span></span>
+    <span class="scoring-pill">🤝 NBM = <span class="val">3pts</span></span>
+    <span class="scoring-pill">🤖 AI PG Bonus = <span class="val">+2pts/post</span></span>
+  </div>
+
+  <div class="leaderboard-card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">🏟️ Team Standings — AE Track</div>
+        <div class="card-subtitle">Normalized by team size · Updated manually</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--amer)"></div>AMER</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--emea)"></div>EMEA</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--apac)"></div>APAC</div>
+      </div>
+    </div>
+    <table class="leaderboard-table" id="ae-team-table">
+      <thead>
+        <tr>
+          <th style="width:50px">Rank</th>
+          <th>Team</th>
+          <th>Region</th>
+          <th class="right">Size</th>
+          <th class="right">🔍 Disc.</th>
+          <th class="right">🤝 NBMs</th>
+          <th class="right">🤖 Bonus</th>
+          <th class="right">Score</th>
+        </tr>
+      </thead>
+      <tbody id="ae-teams-body"></tbody>
+    </table>
+  </div>
+
+  <div class="individual-card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">⭐ Top 10 AEs</div>
+        <div class="card-subtitle">Individual contributors</div>
+      </div>
+    </div>
+    <div class="individual-list" id="ae-individuals-list"></div>
+  </div>
+</div>
+
+<!-- SDR CONTENT -->
+<div class="content" id="tab-sdr">
+  <div class="scoring-bar">
+    <span>📊 Scoring:</span>
+    <span class="formula">Score = [(SALs × 1) + (SAOs × 3)] ÷ Team Size + Bonus</span>
+    <span class="scoring-pill">✅ SAL = <span class="val">1pt</span></span>
+    <span class="scoring-pill">🎯 SAO = <span class="val">3pts</span></span>
+    <span class="scoring-pill">🤖 AI PG Bonus = <span class="val">+2pts/post</span></span>
+  </div>
+
+  <div class="leaderboard-card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">🏟️ Team Standings — SDR Track</div>
+        <div class="card-subtitle">Normalized by team size · Updated manually</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--amer)"></div>AMER</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--emea)"></div>EMEA</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--apac)"></div>APAC</div>
+      </div>
+    </div>
+    <table class="leaderboard-table" id="sdr-team-table">
+      <thead>
+        <tr>
+          <th style="width:50px">Rank</th>
+          <th>Team</th>
+          <th>Region</th>
+          <th class="right">Size</th>
+          <th class="right">✅ SALs</th>
+          <th class="right">🎯 SAOs</th>
+          <th class="right">🤖 Bonus</th>
+          <th class="right">Score</th>
+        </tr>
+      </thead>
+      <tbody id="sdr-teams-body"></tbody>
+    </table>
+  </div>
+
+  <div class="individual-card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">⭐ Top 10 SDRs</div>
+        <div class="card-subtitle">Individual contributors</div>
+      </div>
+    </div>
+    <div class="individual-list" id="sdr-individuals-list"></div>
+  </div>
+</div>
+
+<!-- EDIT BUTTON -->
+<button class="edit-btn" onclick="openModal()">✏️ Update Scores</button>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Update Scores</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchModalTab('ae-teams')">🎯 AE Teams</button>
+      <button class="modal-tab" onclick="switchModalTab('ae-ind')">⭐ AE Individuals</button>
+      <button class="modal-tab" onclick="switchModalTab('sdr-teams')">📞 SDR Teams</button>
+      <button class="modal-tab" onclick="switchModalTab('sdr-ind')">⭐ SDR Individuals</button>
+    </div>
+
+    <div class="modal-section active" id="modal-ae-teams">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Enter cumulative totals for the competition so far. Score is calculated automatically.</div>
+      <div class="modal-grid" id="ae-teams-form"></div>
+    </div>
+    <div class="modal-section" id="modal-ae-ind">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Enter raw activity totals per individual. Score = (Discoveries × 1) + (NBMs × 3) + Bonus.</div>
+      <div class="modal-grid" id="ae-ind-form"></div>
+    </div>
+    <div class="modal-section" id="modal-sdr-teams">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Enter cumulative totals for the competition so far. Score is calculated automatically.</div>
+      <div class="modal-grid" id="sdr-teams-form"></div>
+    </div>
+    <div class="modal-section" id="modal-sdr-ind">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Enter raw activity totals per individual. Score = (SALs × 1) + (SAOs × 3) + Bonus.</div>
+      <div class="modal-grid" id="sdr-ind-form"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveData()">💾 Save & Update Scoreboard</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── DATA STORE ──────────────────────────────────────────────────────────────
+// All leaderboard data lives in data.json — edit that file to update scores.
+let currentData = null;
+
+const _PLACEHOLDER = {
+  aeTeams: [
+    { name: "The Keyspaces",       manager: "Cameron Dickson",      region: "AMER", size: 6,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Replicators",     manager: "Harrison Durrett",     region: "AMER", size: 7,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Sentinels",       manager: "Liam O'Keefe",         region: "AMER", size: 6,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Cluster Kings",   manager: "Mitch Muller",         region: "AMER", size: 8,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Pub/Sub Squad",   manager: "Ari Ivenetosch",       region: "AMER", size: 6,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Pipeline Pushers",manager: "Neil Meulener",        region: "AMER", size: 5,  m1: 0, m2: 0, bonus: 0 },
+    { name: "Team Cach4Cash",      manager: "Evan Leeper",          region: "AMER", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Eviction Notice", manager: "Jake Van Asten",       region: "AMER", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Hash Slayers",    manager: "Jason Hoehn",          region: "AMER", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Hot Keys",        manager: "Kristina Thompson",    region: "AMER", size: 6,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Bit Shifters",    manager: "Peter Dellaportas",    region: "AMER", size: 3,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The TTL Terminators", manager: "Nick Morrison",        region: "AMER", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Sorted Set",      manager: "Rodolfo Cunha",        region: "AMER", size: 8,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Persistence Pact",manager: "Spencer Tuttle",       region: "EMEA", size: 5,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The AOF Army",        manager: "Thomas Gregg",         region: "EMEA", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The RDB Raiders",     manager: "Olivier Attali",       region: "EMEA", size: 3,  m1: 0, m2: 0, bonus: 0 },
+    { name: "Team Delta",          manager: "Etienne Du Chaffaut",  region: "EMEA", size: 8,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Lua Scripts",     manager: "Matt Hoffman",         region: "EMEA", size: 8,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The String Theory",   manager: "Rohan Amin",           region: "EMEA", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Geo Seekers",     manager: "Utkarsha Singh",       region: "APAC", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Bloom Filters",   manager: "Robin Fong",           region: "APAC", size: 4,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Stream Team",     manager: "Abhoy Sarkar",         region: "APAC", size: 2,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Lazy Loaders",    manager: "Sameer Dhamane",       region: "APAC", size: 6,  m1: 0, m2: 0, bonus: 0 },
+    { name: "The Atomic Unit",     manager: "Karthik Pemmaraju",    region: "APAC", size: 5,  m1: 0, m2: 0, bonus: 0 },
+  ],
+  aeInd: [
+    { name: "Person 1",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 2",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 3",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 4",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 5",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 6",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 7",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 8",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 9",  m1: 0, m2: 0, bonus: 0 },
+    { name: "Person 10", m1: 0, m2: 0, bonus: 0 },
+  ],
+  sdrTeams: [
+    { name: "SDR Squad A", manager: "Lauren Herman",    region: "AMER", size: 7, m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR Squad B", manager: "Rob Small",        region: "AMER", size: 7, m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR Squad C", manager: "Sharon Serviere",  region: "AMER", size: 7, m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR Squad D", manager: "Ahsan Hussain",    region: "EMEA", size: 5, m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR Squad E", manager: "Charles Tristram", region: "EMEA", size: 8, m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR Squad F", manager: "Jacquelyn Yeow",   region: "APAC", size: 4, m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR Squad G", manager: "Payal Toshniwal",  region: "APAC", size: 4, m1: 0, m2: 0, bonus: 0 },
+  ],
+  sdrInd: [
+    { name: "SDR 1",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 2",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 3",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 4",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 5",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 6",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 7",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 8",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 9",  m1: 0, m2: 0, bonus: 0 },
+    { name: "SDR 10", m1: 0, m2: 0, bonus: 0 },
+  ]
+};
+
+// ─── LOAD ─────────────────────────────────────────────────────────────────────
+function loadData() {
+  return currentData || JSON.parse(JSON.stringify(_PLACEHOLDER));
+}
+
+function saveData() {
+  const data = loadData();
+  // Read AE teams
+  data.aeTeams.forEach((t, i) => {
+    t.name    = document.getElementById(`ae-t-name-${i}`)?.value   ?? t.name;
+    t.manager = document.getElementById(`ae-t-mgr-${i}`)?.value    ?? t.manager;
+    t.size    = +document.getElementById(`ae-t-size-${i}`)?.value  || t.size;
+    t.m1      = +document.getElementById(`ae-t-m1-${i}`)?.value    || 0;
+    t.m2      = +document.getElementById(`ae-t-m2-${i}`)?.value    || 0;
+    t.bonus   = +document.getElementById(`ae-t-bonus-${i}`)?.value || 0;
+  });
+  // Read AE individuals
+  data.aeInd.forEach((p, i) => {
+    p.name  = document.getElementById(`ae-ind-name-${i}`)?.value    ?? p.name;
+    p.m1    = +document.getElementById(`ae-ind-m1-${i}`)?.value     || 0;
+    p.m2    = +document.getElementById(`ae-ind-m2-${i}`)?.value     || 0;
+    p.bonus = +document.getElementById(`ae-ind-bonus-${i}`)?.value  || 0;
+  });
+  // Read SDR teams
+  data.sdrTeams.forEach((t, i) => {
+    t.name    = document.getElementById(`sdr-t-name-${i}`)?.value   ?? t.name;
+    t.manager = document.getElementById(`sdr-t-mgr-${i}`)?.value    ?? t.manager;
+    t.size    = +document.getElementById(`sdr-t-size-${i}`)?.value  || t.size;
+    t.m1      = +document.getElementById(`sdr-t-m1-${i}`)?.value    || 0;
+    t.m2      = +document.getElementById(`sdr-t-m2-${i}`)?.value    || 0;
+    t.bonus   = +document.getElementById(`sdr-t-bonus-${i}`)?.value || 0;
+  });
+  // Read SDR individuals
+  data.sdrInd.forEach((p, i) => {
+    p.name  = document.getElementById(`sdr-ind-name-${i}`)?.value    ?? p.name;
+    p.m1    = +document.getElementById(`sdr-ind-m1-${i}`)?.value     || 0;
+    p.m2    = +document.getElementById(`sdr-ind-m2-${i}`)?.value     || 0;
+    p.bonus = +document.getElementById(`sdr-ind-bonus-${i}`)?.value  || 0;
+  });
+  currentData = data;
+  closeModal();
+  renderAll();
+}
+
+// ─── SCORING ─────────────────────────────────────────────────────────────────
+function teamScore(t) {
+  return ((t.m1 * 1 + t.m2 * 3) / t.size) + t.bonus;
+}
+function indScore(p) {
+  return (p.m1 * 1) + (p.m2 * 3) + p.bonus;
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+const RANK_EMOJI = ['🥇','🥈','🥉'];
+const AVATARS = ['#DC382C','#4DA6FF','#50D890','#FF9F43','#9B59B6','#1ABC9C','#E74C3C','#3498DB','#F39C12','#2ECC71'];
+
+function rankClass(r) {
+  if (r === 1) return 'rank-1';
+  if (r === 2) return 'rank-2';
+  if (r === 3) return 'rank-3';
+  return 'rank-other';
+}
+
+function renderTeams(teams, tbodyId, isAE) {
+  const sorted = [...teams].map((t,i) => ({...t, origIdx: i, score: teamScore(t)}))
+                           .sort((a,b) => b.score - a.score);
+  const tbody = document.getElementById(tbodyId);
+  let html = '';
+  // Find top AMER, EMEA, APAC for finals badge
+  const finalists = {};
+  sorted.forEach(t => { if (!finalists[t.region]) finalists[t.region] = t.name; });
+
+  sorted.forEach((t, idx) => {
+    const rank = idx + 1;
+    const rankEmoji = rank <= 3 ? RANK_EMOJI[rank-1] : rank;
+    const isTop = rank === 1;
+    const isFinalist = Object.values(finalists).includes(t.name) && rank <= sorted.filter(x=>x.region===t.region).length;
+    const regionTopBadge = finalists[t.region] === t.name
+      ? `<span class="finals-badge">🏆 #1 ${t.region}</span>` : '';
+
+    html += `<tr class="${rank <= 3 ? 'top-row' : ''}">
+      <td><div class="rank-cell"><span class="rank-num ${rankClass(rank)}">${rankEmoji}</span></div></td>
+      <td>
+        <div class="team-name">${t.name} ${regionTopBadge}</div>
+        <div class="team-manager">${t.manager}</div>
+      </td>
+      <td><span class="region-badge region-${t.region}">${t.region}</span></td>
+      <td class="right" style="color:var(--muted)">${t.size}</td>
+      <td class="right"><div class="metric-cell"><div class="metric-val">${t.m1}</div><div class="metric-label">${isAE ? 'Disc.' : 'SALs'}</div></div></td>
+      <td class="right"><div class="metric-cell"><div class="metric-val">${t.m2}</div><div class="metric-label">${isAE ? 'NBMs' : 'SAOs'}</div></div></td>
+      <td class="right" style="color:var(--emea)">${t.bonus > 0 ? '+' + t.bonus : '—'}</td>
+      <td class="right"><div class="score-cell ${rank === 1 ? 'top' : ''}">${t.score.toFixed(1)}</div></td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function renderIndividuals(individuals, listId, isAE) {
+  const sorted = [...individuals].map((p,i) => ({...p, origIdx: i, score: indScore(p)}))
+                                 .sort((a,b) => b.score - a.score)
+                                 .slice(0, 10);
+  const list = document.getElementById(listId);
+  let html = '';
+  sorted.forEach((p, idx) => {
+    const rank = idx + 1;
+    const rankDisplay = rank <= 3 ? RANK_EMOJI[rank-1] : rank;
+    const initial = (p.name || '?').charAt(0).toUpperCase();
+    const avatarColor = AVATARS[idx % AVATARS.length];
+    html += `<div class="individual-item ${rank <= 3 ? 'top-3' : ''}">
+      <div class="ind-rank ${rankClass(rank)}">${rankDisplay}</div>
+      <div class="ind-avatar" style="background:${avatarColor}20;color:${avatarColor};border:1.5px solid ${avatarColor}40">${initial}</div>
+      <div class="ind-info">
+        <div class="ind-name">${p.name}</div>
+      </div>
+      <div class="ind-score">${p.score}</div>
+    </div>`;
+  });
+  list.innerHTML = html;
+}
+
+function renderAll() {
+  const data = loadData();
+  renderTeams(data.aeTeams, 'ae-teams-body', true);
+  renderTeams(data.sdrTeams, 'sdr-teams-body', false);
+  renderIndividuals(data.aeInd, 'ae-individuals-list', true);
+  renderIndividuals(data.sdrInd, 'sdr-individuals-list', false);
+}
+
+// ─── MODAL FORMS ─────────────────────────────────────────────────────────────
+function buildModalForms() {
+  const data = loadData();
+
+  // AE Teams form
+  const aeTeamsForm = document.getElementById('ae-teams-form');
+  aeTeamsForm.innerHTML = data.aeTeams.map((t,i) => `
+    <div class="team-edit-row">
+      <div class="team-edit-name">
+        <span class="region-badge region-${t.region}">${t.region}</span>
+        <input style="background:transparent;border:none;color:var(--text);font-weight:700;font-size:13px;outline:none;flex:1" id="ae-t-name-${i}" value="${t.name}" placeholder="Team Name"/>
+        <span style="font-size:11px;color:var(--muted)">Manager:</span>
+        <input style="background:transparent;border:none;color:var(--muted);font-size:11px;outline:none;width:120px" id="ae-t-mgr-${i}" value="${t.manager}" placeholder="Manager"/>
+      </div>
+      <div class="team-edit-fields">
+        <div class="field-group"><label>Team Size</label><input type="number" id="ae-t-size-${i}" value="${t.size}" min="1"/></div>
+        <div class="field-group"><label>🔍 Discoveries</label><input type="number" id="ae-t-m1-${i}" value="${t.m1}" min="0"/></div>
+        <div class="field-group"><label>🤝 NBMs</label><input type="number" id="ae-t-m2-${i}" value="${t.m2}" min="0"/></div>
+        <div class="field-group"><label>🤖 Bonus Pts</label><input type="number" id="ae-t-bonus-${i}" value="${t.bonus}" min="0"/></div>
+        <div class="field-group"><label>📊 Score</label><input type="number" style="color:var(--redis-red);pointer-events:none" value="${teamScore(t).toFixed(1)}" readonly/></div>
+      </div>
+    </div>`).join('');
+
+  // AE Individuals form
+  const aeIndForm = document.getElementById('ae-ind-form');
+  aeIndForm.innerHTML = `
+    <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1fr;gap:8px;padding:0 14px;margin-bottom:4px;">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px">Name</div>
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;text-align:center">🔍 Disc.</div>
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;text-align:center">🤝 NBMs</div>
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;text-align:center">🤖 Bonus</div>
+    </div>` +
+    data.aeInd.map((p,i) => `
+    <div class="ind-edit-row">
+      <div class="field-group"><input id="ae-ind-name-${i}" value="${p.name}" placeholder="Name"/></div>
+      <div class="field-group"><input type="number" id="ae-ind-m1-${i}" value="${p.m1}" min="0"/></div>
+      <div class="field-group"><input type="number" id="ae-ind-m2-${i}" value="${p.m2}" min="0"/></div>
+      <div class="field-group"><input type="number" id="ae-ind-bonus-${i}" value="${p.bonus}" min="0"/></div>
+    </div>`).join('');
+
+  // SDR Teams form
+  const sdrTeamsForm = document.getElementById('sdr-teams-form');
+  sdrTeamsForm.innerHTML = data.sdrTeams.map((t,i) => `
+    <div class="team-edit-row">
+      <div class="team-edit-name">
+        <span class="region-badge region-${t.region}">${t.region}</span>
+        <input style="background:transparent;border:none;color:var(--text);font-weight:700;font-size:13px;outline:none;flex:1" id="sdr-t-name-${i}" value="${t.name}" placeholder="Team Name"/>
+        <span style="font-size:11px;color:var(--muted)">Manager:</span>
+        <input style="background:transparent;border:none;color:var(--muted);font-size:11px;outline:none;width:120px" id="sdr-t-mgr-${i}" value="${t.manager}" placeholder="Manager"/>
+      </div>
+      <div class="team-edit-fields">
+        <div class="field-group"><label>Team Size</label><input type="number" id="sdr-t-size-${i}" value="${t.size}" min="1"/></div>
+        <div class="field-group"><label>✅ SALs</label><input type="number" id="sdr-t-m1-${i}" value="${t.m1}" min="0"/></div>
+        <div class="field-group"><label>🎯 SAOs</label><input type="number" id="sdr-t-m2-${i}" value="${t.m2}" min="0"/></div>
+        <div class="field-group"><label>🤖 Bonus Pts</label><input type="number" id="sdr-t-bonus-${i}" value="${t.bonus}" min="0"/></div>
+        <div class="field-group"><label>📊 Score</label><input type="number" style="color:var(--redis-red);pointer-events:none" value="${teamScore(t).toFixed(1)}" readonly/></div>
+      </div>
+    </div>`).join('');
+
+  // SDR Individuals form
+  const sdrIndForm = document.getElementById('sdr-ind-form');
+  sdrIndForm.innerHTML = `
+    <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1fr;gap:8px;padding:0 14px;margin-bottom:4px;">
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px">Name</div>
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;text-align:center">✅ SALs</div>
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;text-align:center">🎯 SAOs</div>
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;text-align:center">🤖 Bonus</div>
+    </div>` +
+    data.sdrInd.map((p,i) => `
+    <div class="ind-edit-row">
+      <div class="field-group"><input id="sdr-ind-name-${i}" value="${p.name}" placeholder="Name"/></div>
+      <div class="field-group"><input type="number" id="sdr-ind-m1-${i}" value="${p.m1}" min="0"/></div>
+      <div class="field-group"><input type="number" id="sdr-ind-m2-${i}" value="${p.m2}" min="0"/></div>
+      <div class="field-group"><input type="number" id="sdr-ind-bonus-${i}" value="${p.bonus}" min="0"/></div>
+    </div>`).join('');
+}
+
+// ─── TABS & MODAL ─────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+let modalTabActive = 'ae-teams';
+function switchModalTab(tab) {
+  modalTabActive = tab;
+  document.querySelectorAll('.modal-tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.modal-section').forEach(el => el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('modal-' + tab).classList.add('active');
+}
+
+function openModal() {
+  buildModalForms();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+// ─── WEEK COUNTER ─────────────────────────────────────────────────────────────
+function updateWeekBadge() {
+  const kickoff = new Date('2026-06-11');
+  const close   = new Date('2026-07-19');
+  const now     = new Date();
+  if (now < kickoff) {
+    document.getElementById('current-week').textContent = '🚀';
+    document.getElementById('current-phase').textContent = 'Kicks off tomorrow!';
+    return;
+  }
+  if (now > close) {
+    document.getElementById('current-week').textContent = '🏁';
+    document.getElementById('current-phase').textContent = 'Competition ended';
+    return;
+  }
+  const days = Math.floor((now - kickoff) / (1000 * 60 * 60 * 24));
+  const week = Math.min(Math.floor(days / 7) + 1, 5);
+  document.getElementById('current-week').textContent = week;
+  document.getElementById('current-phase').textContent = week <= 3 ? '🌍 Global Heats' : '🏆 Finals';
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+async function initData() {
+  try {
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    currentData = await res.json();
+  } catch(e) {
+    console.warn('Could not load data.json, using placeholder data.', e);
+    currentData = JSON.parse(JSON.stringify(_PLACEHOLDER));
+  }
+  updateWeekBadge();
+  renderAll();
+  const luEl = document.getElementById('last-updated');
+  if (luEl && currentData.lastUpdated) {
+    luEl.textContent = 'Data: ' + currentData.lastUpdated;
+  }
+}
+initData();
+</script>
+</body>
+</html>
