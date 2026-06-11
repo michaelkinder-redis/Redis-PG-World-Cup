@@ -1,62 +1,434 @@
 {
-  "lastUpdated": "2026-06-10",
+  "lastUpdated": "2026-06-11",
   "aeTeams": [
-    { "name": "The Keyspaces",        "manager": "Cameron Dickson",     "region": "AMER", "size": 6, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Replicators",      "manager": "Harrison Durrett",    "region": "AMER", "size": 7, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Sentinels",        "manager": "Liam O'Keefe",        "region": "AMER", "size": 6, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Cluster Kings",    "manager": "Mitch Muller",        "region": "AMER", "size": 8, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Pub/Sub Squad",    "manager": "Ari Ivenetosch",      "region": "AMER", "size": 6, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Pipeline Pushers", "manager": "Neil Meulener",       "region": "AMER", "size": 5, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Team Cach4Cash",       "manager": "Evan Leeper",         "region": "AMER", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Eviction Notice",  "manager": "Jake Van Asten",      "region": "AMER", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Hash Slayers",     "manager": "Jason Hoehn",         "region": "AMER", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Hot Keys",         "manager": "Kristina Thompson",   "region": "AMER", "size": 6, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Bit Shifters",     "manager": "Peter Dellaportas",   "region": "AMER", "size": 3, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The TTL Terminators",  "manager": "Nick Morrison",       "region": "AMER", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Sorted Set",       "manager": "Rodolfo Cunha",       "region": "AMER", "size": 8, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Persistence Pact", "manager": "Spencer Tuttle",      "region": "EMEA", "size": 5, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The AOF Army",         "manager": "Thomas Gregg",        "region": "EMEA", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The RDB Raiders",      "manager": "Olivier Attali",      "region": "EMEA", "size": 3, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Team Delta",           "manager": "Etienne Du Chaffaut", "region": "EMEA", "size": 8, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Lua Scripts",      "manager": "Matt Hoffman",        "region": "EMEA", "size": 8, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The String Theory",    "manager": "Rohan Amin",          "region": "EMEA", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Geo Seekers",      "manager": "Utkarsha Singh",      "region": "APAC", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Bloom Filters",    "manager": "Robin Fong",          "region": "APAC", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Stream Team",      "manager": "Abhoy Sarkar",        "region": "APAC", "size": 2, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Lazy Loaders",     "manager": "Sameer Dhamane",      "region": "APAC", "size": 6, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "The Atomic Unit",      "manager": "Karthik Pemmaraju",   "region": "APAC", "size": 5, "m1": 0, "m2": 0, "bonus": 0 }
+    {
+      "name": "The Keyspaces",
+      "manager": "Cameron Dickson",
+      "region": "AMER",
+      "size": 6,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Replicators",
+      "manager": "Harrison Durrett",
+      "region": "AMER",
+      "size": 7,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Sentinels",
+      "manager": "Liam O'Keefe",
+      "region": "AMER",
+      "size": 6,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Cluster Kings",
+      "manager": "Mitch Muller",
+      "region": "AMER",
+      "size": 8,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Pub/Sub Squad",
+      "manager": "Ari Ivenetosch",
+      "region": "AMER",
+      "size": 6,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Pipeline Pushers",
+      "manager": "Neil Meulener",
+      "region": "AMER",
+      "size": 5,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Team Cach4Cash",
+      "manager": "Evan Leeper",
+      "region": "AMER",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Eviction Notice",
+      "manager": "Jake Van Asten",
+      "region": "AMER",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Hash Slayers",
+      "manager": "Jason Hoehn",
+      "region": "AMER",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Hot Keys",
+      "manager": "Kristina Thompson",
+      "region": "AMER",
+      "size": 6,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Bit Shifters",
+      "manager": "Peter Dellaportas",
+      "region": "AMER",
+      "size": 3,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The TTL Terminators",
+      "manager": "Nick Morrison",
+      "region": "AMER",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Sorted Set",
+      "manager": "Rodolfo Cunha",
+      "region": "AMER",
+      "size": 8,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Persistence Pact",
+      "manager": "Spencer Tuttle (EMEA-N)",
+      "region": "EMEA",
+      "size": 5,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The AOF Army",
+      "manager": "Thomas Gregg",
+      "region": "EMEA",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The RDB Raiders",
+      "manager": "Olivier Attali",
+      "region": "EMEA",
+      "size": 3,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Team Delta",
+      "manager": "Etienne Du Chaffaut",
+      "region": "EMEA",
+      "size": 8,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Lua Scripts",
+      "manager": "Matt Hoffman",
+      "region": "EMEA",
+      "size": 8,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The String Theory",
+      "manager": "Rohan Amin",
+      "region": "EMEA",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Geo Seekers",
+      "manager": "Utkarsha Singh",
+      "region": "APAC",
+      "size": 4,
+      "m1": 0,
+      "m2": 1,
+      "bonus": 0
+    },
+    {
+      "name": "The Bloom Filters",
+      "manager": "Robin Fong",
+      "region": "APAC",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Stream Team",
+      "manager": "Abhoy Sarkar",
+      "region": "APAC",
+      "size": 2,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Lazy Loaders",
+      "manager": "Sameer Dhamane",
+      "region": "APAC",
+      "size": 6,
+      "m1": 1,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "The Atomic Unit",
+      "manager": "Karthik Pemmaraju",
+      "region": "APAC",
+      "size": 5,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    }
   ],
   "aeInd": [
-    { "name": "Person 1",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 2",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 3",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 4",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 5",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 6",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 7",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 8",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 9",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "Person 10", "m1": 0, "m2": 0, "bonus": 0 }
+    {
+      "name": "Lexus Cheong",
+      "m1": 0,
+      "m2": 1,
+      "bonus": 0
+    },
+    {
+      "name": "Rushikesh Malasane",
+      "m1": 1,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 3",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 4",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 5",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 6",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 7",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 8",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 9",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 10",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 11",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Person 12",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    }
   ],
   "sdrTeams": [
-    { "name": "SDR Squad A", "manager": "Lauren Herman",    "region": "AMER", "size": 7, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR Squad B", "manager": "Rob Small",        "region": "AMER", "size": 7, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR Squad C", "manager": "Sharon Serviere",  "region": "AMER", "size": 7, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR Squad D", "manager": "Ahsan Hussain",    "region": "EMEA", "size": 5, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR Squad E", "manager": "Charles Tristram", "region": "EMEA", "size": 8, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR Squad F", "manager": "Jacquelyn Yeow",   "region": "APAC", "size": 4, "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR Squad G", "manager": "Payal Toshniwal",  "region": "APAC", "size": 4, "m1": 0, "m2": 0, "bonus": 0 }
+    {
+      "name": "SDR Squad A",
+      "manager": "Lauren Herman",
+      "region": "AMER",
+      "size": 7,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR Squad B",
+      "manager": "Rob Small",
+      "region": "AMER",
+      "size": 7,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR Squad C",
+      "manager": "Sharon Serviere",
+      "region": "AMER",
+      "size": 7,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR Squad D",
+      "manager": "Ahsan Hussain",
+      "region": "EMEA",
+      "size": 5,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR Squad E",
+      "manager": "Charles Tristram",
+      "region": "EMEA",
+      "size": 8,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR Squad F",
+      "manager": "Jacquelyn Yeow",
+      "region": "APAC",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR Squad G",
+      "manager": "Payal Toshniwal",
+      "region": "APAC",
+      "size": 4,
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    }
   ],
   "sdrInd": [
-    { "name": "SDR 1",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 2",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 3",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 4",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 5",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 6",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 7",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 8",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 9",  "m1": 0, "m2": 0, "bonus": 0 },
-    { "name": "SDR 10", "m1": 0, "m2": 0, "bonus": 0 }
+    {
+      "name": "SDR 1",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 2",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 3",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 4",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 5",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 6",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 7",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 8",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 9",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 10",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 11",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "SDR 12",
+      "m1": 0,
+      "m2": 0,
+      "bonus": 0
+    }
   ]
 }
