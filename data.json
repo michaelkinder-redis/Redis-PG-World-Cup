@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-06-11",
+  "lastUpdated": "2026-06-12",
   "aeTeams": [
     {
       "name": "The Keyspaces",
       "manager": "Cameron Dickson",
       "region": "AMER",
       "size": 6,
-      "m1": 0,
+      "m1": 1,
       "m2": 0,
       "bonus": 0
     },
@@ -33,17 +33,17 @@
       "manager": "Mitch Muller",
       "region": "AMER",
       "size": 8,
-      "m1": 0,
+      "m1": 7,
       "m2": 0,
       "bonus": 0
     },
     {
       "name": "The Pub/Sub Squad",
-      "manager": "Ari Ivenetosch",
+      "manager": "Ari Iventosch",
       "region": "AMER",
       "size": 6,
-      "m1": 0,
-      "m2": 0,
+      "m1": 2,
+      "m2": 3,
       "bonus": 0
     },
     {
@@ -60,8 +60,8 @@
       "manager": "Evan Leeper",
       "region": "AMER",
       "size": 4,
-      "m1": 0,
-      "m2": 0,
+      "m1": 1,
+      "m2": 6,
       "bonus": 0
     },
     {
@@ -78,8 +78,8 @@
       "manager": "Jason Hoehn",
       "region": "AMER",
       "size": 4,
-      "m1": 0,
-      "m2": 0,
+      "m1": 1,
+      "m2": 6,
       "bonus": 0
     },
     {
@@ -88,7 +88,7 @@
       "region": "AMER",
       "size": 6,
       "m1": 0,
-      "m2": 0,
+      "m2": 3,
       "bonus": 0
     },
     {
@@ -111,11 +111,11 @@
     },
     {
       "name": "The Sorted Set",
-      "manager": "Rodolfo Cunha",
+      "manager": "Rodolfo Jorge da Cunha",
       "region": "AMER",
       "size": 8,
       "m1": 0,
-      "m2": 0,
+      "m2": 3,
       "bonus": 0
     },
     {
@@ -123,7 +123,7 @@
       "manager": "Spencer Tuttle (EMEA-N)",
       "region": "EMEA",
       "size": 5,
-      "m1": 0,
+      "m1": 4,
       "m2": 0,
       "bonus": 0
     },
@@ -132,7 +132,7 @@
       "manager": "Thomas Gregg",
       "region": "EMEA",
       "size": 4,
-      "m1": 0,
+      "m1": 3,
       "m2": 0,
       "bonus": 0
     },
@@ -151,16 +151,16 @@
       "region": "EMEA",
       "size": 8,
       "m1": 0,
-      "m2": 0,
+      "m2": 3,
       "bonus": 0
     },
     {
       "name": "The Lua Scripts",
-      "manager": "Matt Hoffman",
+      "manager": "Matthew Hoffman",
       "region": "EMEA",
       "size": 8,
-      "m1": 0,
-      "m2": 0,
+      "m1": 1,
+      "m2": 3,
       "bonus": 0
     },
     {
@@ -168,7 +168,7 @@
       "manager": "Rohan Amin",
       "region": "EMEA",
       "size": 4,
-      "m1": 0,
+      "m1": 1,
       "m2": 0,
       "bonus": 0
     },
@@ -177,8 +177,8 @@
       "manager": "Utkarsha Singh",
       "region": "APAC",
       "size": 4,
-      "m1": 0,
-      "m2": 1,
+      "m1": 3,
+      "m2": 3,
       "bonus": 0
     },
     {
@@ -186,8 +186,8 @@
       "manager": "Robin Fong",
       "region": "APAC",
       "size": 4,
-      "m1": 0,
-      "m2": 0,
+      "m1": 2,
+      "m2": 6,
       "bonus": 0
     },
     {
@@ -195,7 +195,7 @@
       "manager": "Abhoy Sarkar",
       "region": "APAC",
       "size": 2,
-      "m1": 0,
+      "m1": 1,
       "m2": 0,
       "bonus": 0
     },
@@ -204,13 +204,13 @@
       "manager": "Sameer Dhamane",
       "region": "APAC",
       "size": 6,
-      "m1": 1,
+      "m1": 2,
       "m2": 0,
       "bonus": 0
     },
     {
       "name": "The Atomic Unit",
-      "manager": "Karthik Pemmaraju",
+      "manager": "Karthik Kishore",
       "region": "APAC",
       "size": 5,
       "m1": 0,
@@ -220,75 +220,75 @@
   ],
   "aeInd": [
     {
+      "name": "Carly Steets",
+      "m1": 0,
+      "m2": 6,
+      "bonus": 0
+    },
+    {
       "name": "Lexus Cheong",
-      "m1": 0,
-      "m2": 1,
+      "m1": 2,
+      "m2": 3,
       "bonus": 0
     },
     {
-      "name": "Rushikesh Malasane",
+      "name": "Sonia Benmouffok",
       "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Carter LaBoue",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Bryan Sowers",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Candace Heng",
+      "m1": 0,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Nelson Chen",
+      "m1": 0,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Valérie Nang Tchee",
+      "m1": 0,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Stefan Schöls",
+      "m1": 3,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "Person 3",
+      "name": "Miller Moreno",
       "m1": 0,
-      "m2": 0,
+      "m2": 3,
       "bonus": 0
     },
     {
-      "name": "Person 4",
+      "name": "Kofi Gyawu",
       "m1": 0,
-      "m2": 0,
+      "m2": 3,
       "bonus": 0
     },
     {
-      "name": "Person 5",
+      "name": "Michael Kagan",
       "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Person 6",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Person 7",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Person 8",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Person 9",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Person 10",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Person 11",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Person 12",
-      "m1": 0,
-      "m2": 0,
+      "m2": 3,
       "bonus": 0
     }
   ],
@@ -334,7 +334,7 @@
       "manager": "Charles Tristram",
       "region": "EMEA",
       "size": 8,
-      "m1": 0,
+      "m1": 1,
       "m2": 0,
       "bonus": 0
     },
@@ -343,8 +343,8 @@
       "manager": "Jacquelyn Yeow",
       "region": "APAC",
       "size": 4,
-      "m1": 0,
-      "m2": 0,
+      "m1": 2,
+      "m2": 6,
       "bonus": 0
     },
     {
@@ -352,80 +352,80 @@
       "manager": "Payal Toshniwal",
       "region": "APAC",
       "size": 4,
-      "m1": 0,
+      "m1": 1,
       "m2": 0,
       "bonus": 0
     }
   ],
   "sdrInd": [
     {
-      "name": "SDR 1",
+      "name": "Megan Ho",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Bryan Keong",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Thomas Pedevilla",
+      "m1": 1,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Prateek Raj",
+      "m1": 1,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Othniel Cotta",
       "m1": 0,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "SDR 2",
+      "name": "Johnathan Feliciano Negron",
       "m1": 0,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "SDR 3",
+      "name": "Isabelle Overton",
       "m1": 0,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "SDR 4",
+      "name": "Alex Rodney",
       "m1": 0,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "SDR 5",
+      "name": "Ryan Faison",
       "m1": 0,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "SDR 6",
+      "name": "Khyati Bhatia",
       "m1": 0,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "SDR 7",
+      "name": "Abby Pfeifer",
       "m1": 0,
       "m2": 0,
       "bonus": 0
     },
     {
-      "name": "SDR 8",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "SDR 9",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "SDR 10",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "SDR 11",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "SDR 12",
+      "name": "Izik Carbajal",
       "m1": 0,
       "m2": 0,
       "bonus": 0
