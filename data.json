@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-06-12",
+  "lastUpdated": "2026-06-16",
   "aeTeams": [
     {
       "name": "The Keyspaces",
       "manager": "Cameron Dickson",
       "region": "AMER",
       "size": 6,
-      "m1": 1,
+      "m1": 2,
       "m2": 0,
       "bonus": 0
     },
@@ -33,8 +33,8 @@
       "manager": "Mitch Muller",
       "region": "AMER",
       "size": 8,
-      "m1": 7,
-      "m2": 0,
+      "m1": 8,
+      "m2": 9,
       "bonus": 0
     },
     {
@@ -42,7 +42,7 @@
       "manager": "Ari Iventosch",
       "region": "AMER",
       "size": 6,
-      "m1": 2,
+      "m1": 3,
       "m2": 3,
       "bonus": 0
     },
@@ -61,7 +61,7 @@
       "region": "AMER",
       "size": 4,
       "m1": 1,
-      "m2": 6,
+      "m2": 12,
       "bonus": 0
     },
     {
@@ -69,7 +69,7 @@
       "manager": "Jake Van Asten",
       "region": "AMER",
       "size": 4,
-      "m1": 0,
+      "m1": 2,
       "m2": 0,
       "bonus": 0
     },
@@ -114,8 +114,8 @@
       "manager": "Rodolfo Jorge da Cunha",
       "region": "AMER",
       "size": 8,
-      "m1": 0,
-      "m2": 3,
+      "m1": 1,
+      "m2": 6,
       "bonus": 0
     },
     {
@@ -123,7 +123,7 @@
       "manager": "Spencer Tuttle (EMEA-N)",
       "region": "EMEA",
       "size": 5,
-      "m1": 4,
+      "m1": 7,
       "m2": 0,
       "bonus": 0
     },
@@ -132,7 +132,7 @@
       "manager": "Thomas Gregg",
       "region": "EMEA",
       "size": 4,
-      "m1": 3,
+      "m1": 5,
       "m2": 0,
       "bonus": 0
     },
@@ -141,7 +141,7 @@
       "manager": "Olivier Attali",
       "region": "EMEA",
       "size": 3,
-      "m1": 0,
+      "m1": 2,
       "m2": 0,
       "bonus": 0
     },
@@ -159,7 +159,7 @@
       "manager": "Matthew Hoffman",
       "region": "EMEA",
       "size": 8,
-      "m1": 1,
+      "m1": 2,
       "m2": 3,
       "bonus": 0
     },
@@ -177,7 +177,7 @@
       "manager": "Utkarsha Singh",
       "region": "APAC",
       "size": 4,
-      "m1": 3,
+      "m1": 4,
       "m2": 3,
       "bonus": 0
     },
@@ -186,8 +186,8 @@
       "manager": "Robin Fong",
       "region": "APAC",
       "size": 4,
-      "m1": 2,
-      "m2": 6,
+      "m1": 6,
+      "m2": 3,
       "bonus": 0
     },
     {
@@ -220,19 +220,43 @@
   ],
   "aeInd": [
     {
+      "name": "Lexus Cheong",
+      "m1": 3,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
       "name": "Carly Steets",
       "m1": 0,
       "m2": 6,
       "bonus": 0
     },
     {
-      "name": "Lexus Cheong",
-      "m1": 2,
+      "name": "Bryce Lucas",
+      "m1": 0,
+      "m2": 6,
+      "bonus": 0
+    },
+    {
+      "name": "Nelson Chen",
+      "m1": 1,
       "m2": 3,
       "bonus": 0
     },
     {
       "name": "Sonia Benmouffok",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Ulises Martinez Uribe",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "Dylan Martinez",
       "m1": 1,
       "m2": 3,
       "bonus": 0
@@ -250,14 +274,8 @@
       "bonus": 0
     },
     {
-      "name": "Candace Heng",
-      "m1": 0,
-      "m2": 3,
-      "bonus": 0
-    },
-    {
-      "name": "Nelson Chen",
-      "m1": 0,
+      "name": "Camryn Manko",
+      "m1": 1,
       "m2": 3,
       "bonus": 0
     },
@@ -271,24 +289,6 @@
       "name": "Stefan Schöls",
       "m1": 3,
       "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Miller Moreno",
-      "m1": 0,
-      "m2": 3,
-      "bonus": 0
-    },
-    {
-      "name": "Kofi Gyawu",
-      "m1": 0,
-      "m2": 3,
-      "bonus": 0
-    },
-    {
-      "name": "Michael Kagan",
-      "m1": 0,
-      "m2": 3,
       "bonus": 0
     }
   ],
@@ -307,7 +307,7 @@
       "manager": "Rob Small",
       "region": "AMER",
       "size": 7,
-      "m1": 0,
+      "m1": 2,
       "m2": 0,
       "bonus": 0
     },
@@ -316,8 +316,8 @@
       "manager": "Sharon Serviere",
       "region": "AMER",
       "size": 7,
-      "m1": 0,
-      "m2": 0,
+      "m1": 1,
+      "m2": 3,
       "bonus": 0
     },
     {
@@ -325,7 +325,7 @@
       "manager": "Ahsan Hussain",
       "region": "EMEA",
       "size": 5,
-      "m1": 0,
+      "m1": 2,
       "m2": 0,
       "bonus": 0
     },
@@ -334,7 +334,7 @@
       "manager": "Charles Tristram",
       "region": "EMEA",
       "size": 8,
-      "m1": 1,
+      "m1": 2,
       "m2": 0,
       "bonus": 0
     },
@@ -343,8 +343,8 @@
       "manager": "Jacquelyn Yeow",
       "region": "APAC",
       "size": 4,
-      "m1": 2,
-      "m2": 6,
+      "m1": 3,
+      "m2": 9,
       "bonus": 0
     },
     {
@@ -359,6 +359,18 @@
   ],
   "sdrInd": [
     {
+      "name": "Luke Brown",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
+      "name": "ZhiRui Teo",
+      "m1": 1,
+      "m2": 3,
+      "bonus": 0
+    },
+    {
       "name": "Megan Ho",
       "m1": 1,
       "m2": 3,
@@ -372,6 +384,30 @@
     },
     {
       "name": "Thomas Pedevilla",
+      "m1": 2,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Johnathan Feliciano Negron",
+      "m1": 1,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Alex Rodney",
+      "m1": 1,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Zoé Bocquillon",
+      "m1": 1,
+      "m2": 0,
+      "bonus": 0
+    },
+    {
+      "name": "Marina Ortiz",
       "m1": 1,
       "m2": 0,
       "bonus": 0
@@ -389,43 +425,7 @@
       "bonus": 0
     },
     {
-      "name": "Johnathan Feliciano Negron",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
       "name": "Isabelle Overton",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Alex Rodney",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Ryan Faison",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Khyati Bhatia",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Abby Pfeifer",
-      "m1": 0,
-      "m2": 0,
-      "bonus": 0
-    },
-    {
-      "name": "Izik Carbajal",
       "m1": 0,
       "m2": 0,
       "bonus": 0
