@@ -190,6 +190,7 @@
     background: rgba(255,255,255,0.02);
   }
   .leaderboard-table th.right, .leaderboard-table td.right { text-align: right; }
+  .leaderboard-table th.center, .leaderboard-table td.center { text-align: center; }
   .leaderboard-table td {
     padding: 12px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -378,9 +379,9 @@
           <th style="width:50px">Rank</th>
           <th>Team</th>
           <th>Region</th>
-          <th class="right">Size</th>
-          <th class="right">🔍 Disc.</th>
-          <th class="right">🤝 NBMs</th>
+          <th class="center">Size</th>
+          <th class="center">🔍 Disc.</th>
+          <th class="center">🤝 NBMs (×3)</th>
           <th class="right">🤖 Bonus</th>
           <th class="right">Score</th>
         </tr>
@@ -428,9 +429,9 @@
           <th style="width:50px">Rank</th>
           <th>Team</th>
           <th>Region</th>
-          <th class="right">Size</th>
-          <th class="right">✅ SALs</th>
-          <th class="right">🎯 SAOs</th>
+          <th class="center">Size</th>
+          <th class="center">✅ SALs</th>
+          <th class="center">🎯 SAOs (×3)</th>
           <th class="right">🤖 Bonus</th>
           <th class="right">Score</th>
         </tr>
@@ -465,7 +466,7 @@ const _PLACEHOLDER = {
     { name: "The Hot Keys", manager: "Kristina Thompson", region: "AMER", size: 6, m1: 23, m2: 15, bonus: 0 },
     { name: "The Sorted Set", manager: "Rodolfo Jorge da Cunha", region: "AMER", size: 8, m1: 20, m2: 27, bonus: 0 },
     { name: "The Geo Seekers", manager: "Utkarsha Singh", region: "APAC", size: 4, m1: 17, m2: 6, bonus: 0 },
-    { name: "The Bloom Filters", manager: "Robin Fong", region: "APAC", size: 4, m1: 19, m2: 3, bonus: 0 },
+    { name: "The Bloom Filters", manager: "Robin Fong", region: "APAC", size: 4, m1: 20, m2: 3, bonus: 0 },
     { name: "The Cluster Kings", manager: "Mitch Muller", region: "AMER", size: 8, m1: 24, m2: 15, bonus: 0 },
     { name: "The Pub/Sub Squad", manager: "Ari Iventosch", region: "AMER", size: 6, m1: 20, m2: 9, bonus: 0 },
     { name: "The TTL Terminators", manager: "Nick Morrison", region: "AMER", size: 4, m1: 15, m2: 3, bonus: 0 },
@@ -475,7 +476,7 @@ const _PLACEHOLDER = {
     { name: "The Sentinels", manager: "Liam O'Keefe", region: "AMER", size: 6, m1: 13, m2: 9, bonus: 0 },
     { name: "The Hash Slayers", manager: "Jason Hoehn", region: "AMER", size: 4, m1: 8, m2: 6, bonus: 0 },
     { name: "The Replicators", manager: "Harrison Durrett", region: "AMER", size: 7, m1: 4, m2: 15, bonus: 0 },
-    { name: "Team Delta", manager: "Etienne Du Chaffaut", region: "EMEA", size: 5, m1: 7, m2: 6, bonus: 0 },
+    { name: "Team Delta", manager: "Etienne Du Chaffaut", region: "EMEA", size: 5, m1: 13, m2: 12, bonus: 0 },
     { name: "The Keyspaces", manager: "Cameron Dickson", region: "AMER", size: 6, m1: 3, m2: 12, bonus: 0 },
     { name: "The Lazy Loaders", manager: "Sameer Dhamane", region: "APAC", size: 6, m1: 6, m2: 9, bonus: 0 },
     { name: "The Atomic Unit", manager: "Karthik Kishore", region: "APAC", size: 5, m1: 5, m2: 6, bonus: 0 },
@@ -502,7 +503,7 @@ const _PLACEHOLDER = {
     { name: "SDR Squad C", manager: "Sharon Serviere", region: "AMER", size: 7, m1: 19, m2: 15, bonus: 0 },
     { name: "SDR Squad D", manager: "Ahsan Hussain", region: "EMEA", size: 5, m1: 10, m2: 9, bonus: 0 },
     { name: "SDR Squad F", manager: "Jacquelyn Yeow", region: "APAC", size: 4, m1: 5, m2: 9, bonus: 0 },
-    { name: "SDR Squad G", manager: "Payal Toshniwal", region: "APAC", size: 4, m1: 5, m2: 9, bonus: 0 },
+    { name: "SDR Squad G", manager: "Payal Toshniwal", region: "APAC", size: 4, m1: 6, m2: 9, bonus: 0 },
     { name: "SDR Squad B", manager: "Rob Small", region: "AMER", size: 7, m1: 11, m2: 6, bonus: 0 },
     { name: "SDR Squad A", manager: "Lauren Herman", region: "AMER", size: 7, m1: 9, m2: 6, bonus: 0 },
   ],
@@ -513,7 +514,7 @@ const _PLACEHOLDER = {
     { name: "Marina Ortiz", m1: 3, m2: 6, bonus: 0 },
     { name: "Robbie Chandler", m1: 6, m2: 3, bonus: 0 },
     { name: "Edith Vera", m1: 5, m2: 3, bonus: 0 },
-    { name: "Poorva Saini", m1: 2, m2: 6, bonus: 0 },
+    { name: "Poorva Saini", m1: 3, m2: 6, bonus: 0 },
     { name: "Chiara Lorefice Campanile", m1: 1, m2: 6, bonus: 0 },
     { name: "Savannah Van Vuren", m1: 1, m2: 6, bonus: 0 },
     { name: "Jordan Sanchez", m1: 2, m2: 3, bonus: 0 },
@@ -571,9 +572,9 @@ function renderTeams(teams, tbodyId, isAE) {
         <div class="team-manager">${t.manager}</div>
       </td>
       <td><span class="region-badge region-${t.region}">${t.region}</span></td>
-      <td class="right" style="color:var(--muted)">${t.size}</td>
-      <td class="right"><div class="metric-cell"><div class="metric-val">${t.m1}</div><div class="metric-label">${isAE ? 'Disc.' : 'SALs'}</div></div></td>
-      <td class="right"><div class="metric-cell"><div class="metric-val">${t.m2}</div><div class="metric-label">${isAE ? 'NBMs' : 'SAOs'}</div></div></td>
+      <td class="center" style="color:var(--muted)">${t.size}</td>
+      <td class="center"><div class="metric-cell"><div class="metric-val">${t.m1}</div><div class="metric-label">${isAE ? 'Disc.' : 'SALs'}</div></div></td>
+      <td class="center"><div class="metric-cell"><div class="metric-val">${t.m2}</div><div class="metric-label">${isAE ? 'NBMs ×3' : 'SAOs ×3'}</div></div></td>
       <td class="right" style="color:var(--emea)">${t.bonus > 0 ? '+' + t.bonus : '—'}</td>
       <td class="right"><div class="score-cell ${rank === 1 ? 'top' : ''}">${t.score.toFixed(1)}</div></td>
     </tr>`;
