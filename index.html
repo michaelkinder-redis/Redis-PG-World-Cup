@@ -310,6 +310,75 @@
     text-transform: uppercase;
   }
 
+  /* DEADLINE BANNERS */
+  .announcement-section {
+    padding: 16px 32px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .deadline-banner {
+    background: linear-gradient(135deg, rgba(255,60,60,0.12), rgba(220,56,44,0.18));
+    border: 1.5px solid rgba(220,56,44,0.6);
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .deadline-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 10px,
+      rgba(220,56,44,0.04) 10px, rgba(220,56,44,0.04) 20px
+    );
+    pointer-events: none;
+  }
+  .deadline-icon { font-size: 28px; flex-shrink: 0; }
+  .deadline-content { flex: 1; }
+  .deadline-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #ff6b6b;
+    letter-spacing: 0.2px;
+    margin-bottom: 3px;
+  }
+  .deadline-sub {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .deadline-sub strong { color: var(--text); }
+  .deadline-countdown {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(220,56,44,0.4);
+    border-radius: 8px;
+    padding: 8px 16px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .countdown-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .countdown-value { font-size: 18px; font-weight: 900; color: #ff6b6b; letter-spacing: 1px; }
+
+  .datasource-banner {
+    background: rgba(77,166,255,0.07);
+    border: 1px solid rgba(77,166,255,0.25);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .datasource-banner strong { color: var(--text); }
+  .datasource-banner .ds-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
   /* SCROLL */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -351,11 +420,37 @@
   <button class="tab-btn" onclick="switchTab('sdr')">📞 SDR Track — Pipeline Creation</button>
 </div>
 
+<!-- DEADLINE BANNERS -->
+<div class="announcement-section">
+  <div class="deadline-banner">
+    <div class="deadline-icon">🚨</div>
+    <div class="deadline-content">
+      <div class="deadline-title">⏰ Global Heats End EoD Thursday 2nd July — Final standings lock in 3 days!</div>
+      <div class="deadline-sub">
+        This is your last chance to push your team up the leaderboard before the top teams from each region advance to the Finals (Weeks 4–5).
+        <strong>Managers: make sure your team tags all meetings in Salesforce &amp; People.ai before the deadline.</strong>
+      </div>
+    </div>
+    <div class="deadline-countdown">
+      <div class="countdown-label">Time Left</div>
+      <div class="countdown-value" id="deadline-countdown">—</div>
+    </div>
+  </div>
+  <div class="datasource-banner">
+    <div class="ds-icon">📊</div>
+    <div>
+      <strong>Data Source: Salesforce &amp; People.ai tagged meetings only.</strong>
+      Only meetings logged since the World Cup kickoff (<strong>11th June 2026</strong>) count toward scores — meetings before that date are excluded regardless of when they were tagged.
+      To maximise your team's score, ensure every qualifying meeting is correctly tagged in Salesforce/People.ai by <strong>EoD Thursday 2nd July</strong>.
+    </div>
+  </div>
+</div>
+
 <!-- AE CONTENT -->
 <div class="content active" id="tab-ae">
   <div class="scoring-bar">
     <span>📊 Scoring:</span>
-    <span class="formula">Score = [(Discoveries × 1) + (NBMs × 3)] ÷ Team Size + Bonus</span>
+    <span class="formula">Score = [(Discoveries × 1) + (NBMs × 3) + Bonus] ÷ Team Size</span>
     <span class="scoring-pill">🔍 Discovery = <span class="val">1pt</span></span>
     <span class="scoring-pill">🤝 NBM = <span class="val">3pts</span></span>
     <span class="scoring-pill">🤖 Iris Bonus = <span class="val">+1pt/post</span></span>
@@ -405,7 +500,7 @@
 <div class="content" id="tab-sdr">
   <div class="scoring-bar">
     <span>📊 Scoring:</span>
-    <span class="formula">Score = [(SALs × 1) + (SAOs × 3)] ÷ Team Size + Bonus</span>
+    <span class="formula">Score = [(SALs × 1) + (SAOs × 3) + Bonus] ÷ Team Size</span>
     <span class="scoring-pill">✅ SAL = <span class="val">1pt</span></span>
     <span class="scoring-pill">🎯 SAO = <span class="val">3pts</span></span>
     <span class="scoring-pill">🤖 Iris Bonus = <span class="val">+1pt/post</span></span>
@@ -457,69 +552,67 @@
 let currentData = null;
 
 const _PLACEHOLDER = {
-  lastUpdated: "2026-06-24",
+  lastUpdated: "2026-06-29",
   aeTeams: [
-    { name: "Team Cach4Cash", manager: "Evan Leeper", region: "AMER", size: 4, m1: 10, m2: 27, bonus: 0 },
-    { name: "The Persistence Pact", manager: "Spencer Tuttle (EMEA-N)", region: "EMEA", size: 5, m1: 29, m2: 12, bonus: 0 },
-    { name: "The RDB Raiders", manager: "Olivier Attali", region: "EMEA", size: 3, m1: 6, m2: 15, bonus: 0 },
+    { name: "The Geo Seekers", manager: "Utkarsha Singh", region: "APAC", size: 4, m1: 27, m2: 18, bonus: 0 },
+    { name: "The Persistence Pact", manager: "Spencer Tuttle (EMEA-N)", region: "EMEA", size: 5, m1: 31, m2: 21, bonus: 3 },
+    { name: "Team Cach4Cash", manager: "Evan Leeper", region: "AMER", size: 4, m1: 12, m2: 27, bonus: 0 },
+    { name: "The Hot Keys", manager: "Kristina Thompson", region: "AMER", size: 6, m1: 31, m2: 21, bonus: 0 },
+    { name: "Team Delta", manager: "Etienne Du Chaffaut", region: "EMEA", size: 5, m1: 22, m2: 21, bonus: 0 },
+    { name: "The Bloom Filters", manager: "Robin Fong", region: "APAC", size: 4, m1: 29, m2: 3, bonus: 0 },
+    { name: "The Sorted Set", manager: "Rodolfo Jorge da Cunha", region: "AMER", size: 8, m1: 34, m2: 27, bonus: 0 },
+    { name: "The RDB Raiders", manager: "Olivier Attali", region: "EMEA", size: 3, m1: 7, m2: 15, bonus: 0 },
+    { name: "The Cluster Kings", manager: "Mitch Muller", region: "AMER", size: 8, m1: 31, m2: 27, bonus: 0 },
+    { name: "The Pub/Sub Squad", manager: "Ari Iventosch", region: "AMER", size: 6, m1: 30, m2: 12, bonus: 0 },
     { name: "The Stream Team", manager: "Abhoy Sarkar", region: "APAC", size: 2, m1: 4, m2: 9, bonus: 0 },
-    { name: "The Hot Keys", manager: "Kristina Thompson", region: "AMER", size: 6, m1: 23, m2: 15, bonus: 0 },
-    { name: "The Sorted Set", manager: "Rodolfo Jorge da Cunha", region: "AMER", size: 8, m1: 20, m2: 27, bonus: 0 },
-    { name: "The Geo Seekers", manager: "Utkarsha Singh", region: "APAC", size: 4, m1: 17, m2: 6, bonus: 0 },
-    { name: "The Bloom Filters", manager: "Robin Fong", region: "APAC", size: 4, m1: 20, m2: 3, bonus: 0 },
-    { name: "The Cluster Kings", manager: "Mitch Muller", region: "AMER", size: 8, m1: 24, m2: 15, bonus: 0 },
-    { name: "The Pub/Sub Squad", manager: "Ari Iventosch", region: "AMER", size: 6, m1: 20, m2: 9, bonus: 0 },
-    { name: "The TTL Terminators", manager: "Nick Morrison", region: "AMER", size: 4, m1: 15, m2: 3, bonus: 0 },
-    { name: "The AOF Army", manager: "Thomas Gregg", region: "EMEA", size: 4, m1: 9, m2: 9, bonus: 0 },
-    { name: "The String Theory", manager: "Rohan Amin", region: "EMEA", size: 4, m1: 15, m2: 3, bonus: 0 },
-    { name: "The Eviction Notice", manager: "Jake Van Asten", region: "AMER", size: 4, m1: 11, m2: 6, bonus: 0 },
-    { name: "The Sentinels", manager: "Liam O'Keefe", region: "AMER", size: 6, m1: 13, m2: 9, bonus: 0 },
-    { name: "The Hash Slayers", manager: "Jason Hoehn", region: "AMER", size: 4, m1: 8, m2: 6, bonus: 0 },
-    { name: "The Replicators", manager: "Harrison Durrett", region: "AMER", size: 7, m1: 4, m2: 15, bonus: 0 },
-    { name: "Team Delta", manager: "Etienne Du Chaffaut", region: "EMEA", size: 5, m1: 13, m2: 12, bonus: 0 },
-    { name: "The Keyspaces", manager: "Cameron Dickson", region: "AMER", size: 6, m1: 3, m2: 12, bonus: 0 },
-    { name: "The Lazy Loaders", manager: "Sameer Dhamane", region: "APAC", size: 6, m1: 6, m2: 9, bonus: 0 },
-    { name: "The Atomic Unit", manager: "Karthik Kishore", region: "APAC", size: 5, m1: 5, m2: 6, bonus: 0 },
-    { name: "The Lua Scripts", manager: "Matthew Hoffman", region: "EMEA", size: 8, m1: 9, m2: 6, bonus: 0 },
-    { name: "The Bit Shifters", manager: "Peter Dellaportas", region: "AMER", size: 3, m1: 3, m2: 0, bonus: 0 },
-    { name: "The Pipeline Pushers", manager: "Neil Meulener", region: "AMER", size: 5, m1: 0, m2: 0, bonus: 0 },
+    { name: "The String Theory", manager: "Rohan Amin", region: "EMEA", size: 4, m1: 18, m2: 6, bonus: 0 },
+    { name: "The Eviction Notice", manager: "Jake Van Asten", region: "AMER", size: 4, m1: 17, m2: 6, bonus: 0 },
+    { name: "The Sentinels", manager: "Liam O'Keefe", region: "AMER", size: 6, m1: 18, m2: 15, bonus: 0 },
+    { name: "The Hash Slayers", manager: "Jason Hoehn", region: "AMER", size: 4, m1: 10, m2: 12, bonus: 0 },
+    { name: "The AOF Army", manager: "Thomas Gregg", region: "EMEA", size: 4, m1: 11, m2: 9, bonus: 0 },
+    { name: "The TTL Terminators", manager: "Nick Morrison", region: "AMER", size: 4, m1: 16, m2: 3, bonus: 0 },
+    { name: "The Keyspaces", manager: "Cameron Dickson", region: "AMER", size: 6, m1: 13, m2: 12, bonus: 0 },
+    { name: "The Lazy Loaders", manager: "Sameer Dhamane", region: "APAC", size: 6, m1: 11, m2: 12, bonus: 0 },
+    { name: "The Replicators", manager: "Harrison Durrett", region: "AMER", size: 7, m1: 5, m2: 15, bonus: 0 },
+    { name: "The Atomic Unit", manager: "Karthik Kishore", region: "APAC", size: 5, m1: 11, m2: 3, bonus: 0 },
+    { name: "The Lua Scripts", manager: "Matthew Hoffman", region: "EMEA", size: 8, m1: 11, m2: 9, bonus: 0 },
+    { name: "The Bit Shifters", manager: "Peter Dellaportas", region: "AMER", size: 3, m1: 5, m2: 0, bonus: 0 },
+    { name: "The Pipeline Pushers", manager: "Neil Meulener", region: "AMER", size: 5, m1: 1, m2: 0, bonus: 0 },
   ],
   aeInd: [
+    { name: "Carter LaBoue", m1: 5, m2: 15, bonus: 0 },
     { name: "Andrew Richards", m1: 14, m2: 3, bonus: 0 },
+    { name: "Nic D'Amico", m1: 8, m2: 9, bonus: 0 },
+    { name: "Michael Crosby", m1: 10, m2: 6, bonus: 0 },
+    { name: "Valérie Nang Tchee", m1: 9, m2: 6, bonus: 0 },
+    { name: "Youcef Boudouh", m1: 6, m2: 9, bonus: 0 },
+    { name: "Lexus Cheong", m1: 8, m2: 6, bonus: 0 },
     { name: "Dylan Martinez", m1: 5, m2: 9, bonus: 0 },
-    { name: "Michael Crosby", m1: 10, m2: 3, bonus: 0 },
-    { name: "Carter LaBoue", m1: 4, m2: 9, bonus: 0 },
-    { name: "Joaquim Kuhles", m1: 6, m2: 6, bonus: 0 },
-    { name: "Daniel Boehm", m1: 2, m2: 9, bonus: 0 },
-    { name: "Carolina Brito Simoes", m1: 5, m2: 6, bonus: 0 },
-    { name: "Lior Belhassen", m1: 4, m2: 6, bonus: 0 },
-    { name: "Anandan Bansal", m1: 4, m2: 6, bonus: 0 },
-    { name: "Brenna Julianus", m1: 1, m2: 9, bonus: 0 },
-    { name: "Brian Cosgrove", m1: 10, m2: 0, bonus: 0 },
-    { name: "Mohit Jindal", m1: 3, m2: 6, bonus: 0 },
+    { name: "Mohit Jindal", m1: 4, m2: 9, bonus: 0 },
+    { name: "Graham Lewis", m1: 7, m2: 6, bonus: 0 },
+    { name: "Justine Hermoso", m1: 7, m2: 6, bonus: 0 },
   ],
   sdrTeams: [
-    { name: "Cache Me Aside", manager: "Charles Tristram", region: "EMEA", size: 8, m1: 19, m2: 27, bonus: 0 },
-    { name: "SDR Squad C", manager: "Sharon Serviere", region: "AMER", size: 7, m1: 19, m2: 15, bonus: 0 },
-    { name: "SDR Squad D", manager: "Ahsan Hussain", region: "EMEA", size: 5, m1: 10, m2: 9, bonus: 0 },
-    { name: "SDR Squad F", manager: "Jacquelyn Yeow", region: "APAC", size: 4, m1: 5, m2: 9, bonus: 0 },
-    { name: "SDR Squad G", manager: "Payal Toshniwal", region: "APAC", size: 4, m1: 6, m2: 9, bonus: 0 },
-    { name: "SDR Squad B", manager: "Rob Small", region: "AMER", size: 7, m1: 11, m2: 6, bonus: 0 },
-    { name: "SDR Squad A", manager: "Lauren Herman", region: "AMER", size: 7, m1: 9, m2: 6, bonus: 0 },
+    { name: "Cache Me Aside", manager: "Charles Tristram", region: "EMEA", size: 8, m1: 25, m2: 45, bonus: 0 },
+    { name: "SDR Squad C", manager: "Sharon Serviere", region: "AMER", size: 7, m1: 34, m2: 27, bonus: 0 },
+    { name: "SDR Squad B", manager: "Rob Small", region: "AMER", size: 7, m1: 25, m2: 27, bonus: 0 },
+    { name: "SDR Squad F", manager: "Jacquelyn Yeow", region: "APAC", size: 4, m1: 10, m2: 18, bonus: 0 },
+    { name: "The Revenue Squad", manager: "Ahsan Hussain", region: "EMEA", size: 5, m1: 15, m2: 15, bonus: 0 },
+    { name: "SDR Squad G", manager: "Payal Toshniwal", region: "APAC", size: 4, m1: 11, m2: 12, bonus: 0 },
+    { name: "SDR Squad A", manager: "Lauren Herman", region: "AMER", size: 7, m1: 15, m2: 21, bonus: 0 },
   ],
   sdrInd: [
-    { name: "Luke Brown", m1: 5, m2: 12, bonus: 0 },
+    { name: "Luke Brown", m1: 9, m2: 12, bonus: 0 },
+    { name: "Abby Pfeifer", m1: 8, m2: 12, bonus: 0 },
+    { name: "Alex Rodney", m1: 10, m2: 6, bonus: 0 },
+    { name: "Chiara Lorefice Campanile", m1: 3, m2: 12, bonus: 0 },
+    { name: "Robbie Chandler", m1: 7, m2: 6, bonus: 0 },
+    { name: "Samantha Needles", m1: 9, m2: 3, bonus: 0 },
+    { name: "Zoé Bocquillon", m1: 6, m2: 6, bonus: 0 },
+    { name: "Marina Ortiz", m1: 5, m2: 6, bonus: 0 },
+    { name: "Savannah Van Vuren", m1: 2, m2: 9, bonus: 0 },
+    { name: "William Hart", m1: 4, m2: 6, bonus: 0 },
     { name: "Valeria Gallardo", m1: 4, m2: 6, bonus: 0 },
-    { name: "Alex Rodney", m1: 6, m2: 3, bonus: 0 },
-    { name: "Marina Ortiz", m1: 3, m2: 6, bonus: 0 },
-    { name: "Robbie Chandler", m1: 6, m2: 3, bonus: 0 },
-    { name: "Edith Vera", m1: 5, m2: 3, bonus: 0 },
-    { name: "Poorva Saini", m1: 3, m2: 6, bonus: 0 },
-    { name: "Chiara Lorefice Campanile", m1: 1, m2: 6, bonus: 0 },
-    { name: "Savannah Van Vuren", m1: 1, m2: 6, bonus: 0 },
-    { name: "Jordan Sanchez", m1: 2, m2: 3, bonus: 0 },
-    { name: "Samantha Needles", m1: 5, m2: 0, bonus: 0 },
-    { name: "Ivan Yeung", m1: 2, m2: 3, bonus: 0 },
   ]
 };
 
@@ -531,7 +624,7 @@ function loadData() {
 
 // ─── SCORING ─────────────────────────────────────────────────────────────────
 function teamScore(t) {
-  return ((t.m1 + t.m2) / t.size) + t.bonus;
+  return (t.m1 + t.m2 + t.bonus) / t.size;
 }
 function indScore(p) {
   return p.m1 + p.m2 + p.bonus;
@@ -643,6 +736,23 @@ function updateWeekBadge() {
   document.getElementById('current-week').textContent = week;
   document.getElementById('current-phase').textContent = week <= 3 ? '🌍 Global Heats' : '🏆 Finals';
 }
+
+// ─── DEADLINE COUNTDOWN ───────────────────────────────────────────────────────
+(function() {
+  const DEADLINE = new Date('2026-07-02T23:59:59+01:00'); // EoD BST Thu 2 Jul
+  function updateCountdown() {
+    const el = document.getElementById('deadline-countdown');
+    if (!el) return;
+    const diff = DEADLINE - Date.now();
+    if (diff <= 0) { el.textContent = 'CLOSED'; return; }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    el.textContent = d + 'd ' + String(h).padStart(2,'0') + 'h ' + String(m).padStart(2,'0') + 'm';
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 30000);
+})();
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 async function initData() {
