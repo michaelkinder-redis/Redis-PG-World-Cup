@@ -1,7 +1,7 @@
 {
   "lastUpdated": "2026-06-29",
   "aeTeams": [
-    { "name": "The Geo Seekers", "manager": "Utkarsha Singh", "region": "APAC", "size": 4, "m1": 27, "m2": 18, "bonus": 0 },
+    { "name": "The Geo Seekers", "manager": "Utkarsha Singh", "region": "APAC", "size": 4, "m1": 27, "m2": 18, "bonus": 3 },
     { "name": "The Persistence Pact", "manager": "Spencer Tuttle (EMEA-N)", "region": "EMEA", "size": 5, "m1": 31, "m2": 21, "bonus": 3 },
     { "name": "Team Cach4Cash", "manager": "Evan Leeper", "region": "AMER", "size": 4, "m1": 12, "m2": 27, "bonus": 0 },
     { "name": "The Hot Keys", "manager": "Kristina Thompson", "region": "AMER", "size": 6, "m1": 31, "m2": 21, "bonus": 0 },
@@ -20,7 +20,7 @@
     { "name": "The TTL Terminators", "manager": "Nick Morrison", "region": "AMER", "size": 4, "m1": 16, "m2": 3, "bonus": 0 },
     { "name": "The Keyspaces", "manager": "Cameron Dickson", "region": "AMER", "size": 6, "m1": 13, "m2": 12, "bonus": 0 },
     { "name": "The Lazy Loaders", "manager": "Sameer Dhamane", "region": "APAC", "size": 6, "m1": 11, "m2": 12, "bonus": 0 },
-    { "name": "The Replicators", "manager": "Harrison Durrett", "region": "AMER", "size": 7, "m1": 5, "m2": 15, "bonus": 0 },
+    { "name": "The Replicators", "manager": "Harrison Durrett", "region": "AMER", "size": 7, "m1": 5, "m2": 15, "bonus": 3 },
     { "name": "The Atomic Unit", "manager": "Karthik Kishore", "region": "APAC", "size": 5, "m1": 11, "m2": 3, "bonus": 0 },
     { "name": "The Lua Scripts", "manager": "Matthew Hoffman", "region": "EMEA", "size": 8, "m1": 11, "m2": 9, "bonus": 0 },
     { "name": "The Bit Shifters", "manager": "Peter Dellaportas", "region": "AMER", "size": 3, "m1": 5, "m2": 0, "bonus": 0 },
@@ -42,7 +42,7 @@
   "sdrTeams": [
     { "name": "Cache Me Aside", "manager": "Charles Tristram", "region": "EMEA", "size": 8, "m1": 25, "m2": 45, "bonus": 0 },
     { "name": "SDR Squad C", "manager": "Sharon Serviere", "region": "AMER", "size": 7, "m1": 34, "m2": 27, "bonus": 0 },
-    { "name": "SDR Squad B", "manager": "Rob Small", "region": "AMER", "size": 7, "m1": 25, "m2": 27, "bonus": 0 },
+    { "name": "SDR Squad B", "manager": "Rob Small", "region": "AMER", "size": 7, "m1": 25, "m2": 27, "bonus": 3 },
     { "name": "SDR Squad F", "manager": "Jacquelyn Yeow", "region": "APAC", "size": 4, "m1": 10, "m2": 18, "bonus": 0 },
     { "name": "The Revenue Squad", "manager": "Ahsan Hussain", "region": "EMEA", "size": 5, "m1": 15, "m2": 15, "bonus": 0 },
     { "name": "SDR Squad G", "manager": "Payal Toshniwal", "region": "APAC", "size": 4, "m1": 11, "m2": 12, "bonus": 0 },
